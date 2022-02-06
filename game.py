@@ -1,8 +1,5 @@
-import asyncio
 import json
-import os
 import re
-from pprint import pprint
 
 import aiohttp
 
@@ -88,23 +85,10 @@ class Game:
                 "https://adventure.land/api/logout_everywhere",
                 data=data,
             ) as response:
-                print(response.status)
-                print(await response.text())
-
-
-async def main():
-    game = Game()
-    email = os.environ["EMAIL"]
-    password = os.environ["PASSWORD"]
-    print(email)
-    session_data = await game.get_session(email, password)
-    print(session_data)
-    await game.set_servers_and_characters()
-    print(game.characters)
-    await asyncio.sleep(3)
-    logout_response = await game.logout_everywhere()
-    print(logout_response)
-
-
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-asyncio.run(main())
+                if response.status == 200:
+                    text_response = await response.text()
+                    try:
+                        json_response = json.loads(text_response)
+                        return json_response
+                    except Exception as error:
+                        print(error)
