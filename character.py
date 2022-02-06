@@ -1,3 +1,8 @@
+import logging
+
+logger = logging.getLogger("adventure_land.character")
+
+
 class Character:
     def __init__(
         self,
