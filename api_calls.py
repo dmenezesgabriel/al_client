@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 import re
+from pprint import pprint
 
 import aiohttp
 
@@ -59,6 +60,34 @@ class Game:
                 "https://adventure.land/api/servers_and_characters",
                 data=data,
             ) as response:
+                if response.status == 200:
+                    text_response = await response.text()
+                    try:
+                        json_response = json.loads(text_response)
+                        return json_response
+                    except Exception as error:
+                        print(error)
+
+    async def set_servers_and_characters(self):
+        servers_and_characters = await self.get_servers_and_characters()
+        self.characters = servers_and_characters[0].get("characters")
+        self.servers = servers_and_characters[0].get("servers")
+        self.code_list = servers_and_characters[0].get("code_list")
+        self.mail = servers_and_characters[0].get("mail")
+        self.rewards = servers_and_characters[0].get("rewards")
+        self.tutorial = servers_and_characters[0].get("tutorial")
+
+    async def logout_everywhere(self):
+        data = {
+            "method": "logout_everywhere",
+            "arguments": "{}",
+        }
+        headers = dict(cookie=f"auth={self.user_id}-{self.session_cookie}")
+        async with aiohttp.ClientSession(headers=headers) as session:
+            async with session.post(
+                "https://adventure.land/api/logout_everywhere",
+                data=data,
+            ) as response:
                 print(response.status)
                 print(await response.text())
 
@@ -70,8 +99,11 @@ async def main():
     print(email)
     session_data = await game.get_session(email, password)
     print(session_data)
-    servers_and_chars = await game.get_servers_and_characters()
-    print(servers_and_chars)
+    await game.set_servers_and_characters()
+    print(game.characters)
+    await asyncio.sleep(3)
+    logout_response = await game.logout_everywhere()
+    print(logout_response)
 
 
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
