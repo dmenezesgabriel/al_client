@@ -5,6 +5,10 @@ import aiohttp
 
 
 class Game:
+    """
+    Client class.
+    """
+
     async def get_session(self, email, password):
         data = {
             "method": "signup_or_login",
