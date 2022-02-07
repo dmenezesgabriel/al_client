@@ -18,14 +18,16 @@ async def main():
     await user.login()
     game = Game(user)
     server = game.select_server("EUI")
-    print(server.uri)
     character = game.select_characters("BjornOak")
     print(character.name)
-    await asyncio.sleep(3)
     # Connect Character
+    await character.connect(server.uri)
+    await asyncio.sleep(3)
+    await character.stop()
     logout_response = await user.logout_everywhere()
     print(logout_response)
 
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.run(main())

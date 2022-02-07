@@ -31,3 +31,4 @@ def setup_loggers():
     stream_handler.setFormatter(formatter)
     handlers = [stream_handler]
     set_logger_config("adventure_land", log_level, handlers)
+    set_logger_config("socketio", log_level, handlers)

@@ -1,9 +1,11 @@
 import logging
 
+from observer import Observer
+
 logger = logging.getLogger("adventure_land.character")
 
 
-class Character:
+class Character(Observer):
     def __init__(
         self,
         map,
@@ -18,6 +20,7 @@ class Character:
         type,
         id,
     ) -> None:
+        super().__init__()
         self.map = map
         self.in_map = in_map
         self.name = name
