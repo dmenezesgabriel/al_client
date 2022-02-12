@@ -14,6 +14,8 @@ class Character(Observer):
         level,
         skin,
         cx,
+        server,
+        secret,
         online,
         y,
         x,
@@ -32,3 +34,5 @@ class Character(Observer):
         self.x = x
         self.type = type
         self.id = id
+        self.server = server
+        self.secret = secret
