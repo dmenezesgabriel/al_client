@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import sys
 
 from game import Game
 from log import setup_loggers
@@ -16,6 +17,7 @@ async def main():
     user = User(email, password)
     print(user.email)
     await user.login()
+    await user.post_code("./code/test.js", "2", "test_post_code")
     game = Game(user)
     server = game.select_server("EUI")
     character = game.select_characters("BjornOak")
@@ -29,5 +31,9 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(main())
+    if sys.platform == "win32":
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
