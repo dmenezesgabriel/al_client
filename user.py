@@ -112,6 +112,36 @@ class User:
         self.rewards = servers_and_characters[0].get("rewards")
         self.tutorial = servers_and_characters[0].get("tutorial")
 
+    async def post_code(self, file_path, slot_number, save_name):
+        print("Posting code")
+        with open(file_path, "r") as code_file:
+            code_file_content = code_file.read()
+        args = dict(
+            code=code_file_content,
+            slot=str(slot_number),
+            name=save_name,
+            log="1",
+        )
+        arguments = json.dumps(args)
+        data = {
+            "method": "save_code",
+            "arguments": arguments,
+        }
+        headers = dict(cookie=f"auth={self.id}-{self.session_cookie}")
+        headers.update({"Content-Type": "application/x-www-form-urlencoded"})
+        async with aiohttp.ClientSession(headers=headers) as session:
+            async with session.post(
+                "https://adventure.land/api/save_code",
+                data=data,
+            ) as response:
+                if response.status == 200:
+                    text_response = await response.text()
+                    try:
+                        json_response = json.loads(text_response)
+                        return json_response
+                    except Exception as error:
+                        logger.error(error)
+
     async def logout_everywhere(self):
         """
         Logout from everywhere.
