@@ -4,6 +4,7 @@ import os
 
 from game import Game
 from log import setup_loggers
+from login import LoginFacade
 from user import User
 
 logger = logging.getLogger("adventure_land")
@@ -15,7 +16,7 @@ async def main():
     password = os.environ["PASSWORD"]
     user = User(email, password)
     print(user.email)
-    await user.login()
+    await LoginFacade.loginApi(user)
     game = Game(user)
     server = game.select_server("EUI")
     character = game.select_characters("BjornOak")
