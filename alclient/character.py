@@ -1,6 +1,6 @@
 import logging
 
-from observer import Observer
+from alclient.observer import Observer
 
 logger = logging.getLogger("adventure_land.character")
 
@@ -14,13 +14,13 @@ class Character(Observer):
         level,
         skin,
         cx,
-        server,
-        secret,
         online,
         y,
         x,
         type,
         id,
+        server=None,
+        secret=None,
     ) -> None:
         super().__init__()
         self.map = map

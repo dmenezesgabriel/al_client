@@ -1,12 +1,11 @@
 import asyncio
 import logging
 import os
-import sys
 
-from game import Game
-from log import setup_loggers
-from login import LoginFacade
-from user import User
+from alclient.game import Game
+from alclient.log import setup_loggers
+from alclient.login.facade import LoginFacade
+from alclient.user.user import User
 
 logger = logging.getLogger("adventure_land")
 
@@ -17,8 +16,9 @@ async def main():
     password = os.environ["PASSWORD"]
     user = User(email, password)
     print(user.email)
-    await LoginFacade.loginApi(user)
-    await user.post_code("./code/test.js", "2", "test_post_code")
+    login_facade = LoginFacade()
+    await login_facade.login_api(user)
+    await user.post_code("./code/hello.js", "2", "test_post_code")
     game = Game(user)
     server = game.select_server("EUI")
     character = game.select_characters("BjornOak")
@@ -29,12 +29,3 @@ async def main():
     await character.stop()
     logout_response = await user.logout_everywhere()
     print(logout_response)
-
-
-if __name__ == "__main__":
-    if sys.platform == "win32":
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        pass
