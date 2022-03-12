@@ -18,14 +18,16 @@ async def main():
     print(user.email)
     login_facade = LoginFacade()
     await login_facade.login_api(user)
-    await user.post_code("./code/hello.js", "2", "test_post_code")
+    # await user.post_code("./code/hello.js", "2", "test_post_code")
     game = Game(user)
     server = game.select_server("EUI")
     character = game.select_characters("BjornOak")
+    character.session = user.session
+    character.user_id = user.id
     print(character.name)
     # Connect Character
     await character.connect(server.uri)
-    await asyncio.sleep(3)
+    await asyncio.sleep(10)
     await character.stop()
     logout_response = await user.logout_everywhere()
     print(logout_response)

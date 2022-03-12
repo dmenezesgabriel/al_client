@@ -10,7 +10,7 @@ class Observer:
     Connect to websocket and listen/emit to events.
     """
 
-    socket = socketio.AsyncClient(logger=True)
+    socket = socketio.AsyncClient(logger=False)
 
     def __init__(self) -> None:
         pass
