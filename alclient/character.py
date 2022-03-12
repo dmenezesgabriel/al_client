@@ -109,6 +109,20 @@ class Character(Observer):
             # logger.info(f"Event data: {data}")
             pass
 
+    async def move(self, going_x, going_y, m):
+        await self.socket.emit(
+            "move",
+            {
+                "x": self.x,
+                "y": self.y,
+                "m": m,
+                "going_x": going_x,
+                "going_y": going_y,
+            },
+        )
+        self.x = going_x
+        self.y = going_y
+
     async def connect(self, address):
         await self.callbacks()
         logger.info("Connecting Socket")

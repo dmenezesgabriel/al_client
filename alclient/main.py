@@ -27,7 +27,7 @@ async def main():
     print(character.name)
     # Connect Character
     await character.connect(server.uri)
-    await asyncio.sleep(10)
+    await asyncio.sleep(20)
     await character.stop()
     logout_response = await user.logout_everywhere()
     print(logout_response)
