@@ -3,9 +3,9 @@ import logging
 import re
 
 import aiohttp
-from alclient.user.user import User
+from alclient.domain.user import User
 
-logger = logging.getLogger("adventure_land.login")
+logger = logging.getLogger("alclient.login")
 
 
 class Login:

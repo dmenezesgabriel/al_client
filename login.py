@@ -2,7 +2,7 @@ import logging
 
 from user import User
 
-logger = logging.getLogger("adventure_land.login")
+logger = logging.getLogger("alclient.login")
 
 
 class LoginFacade:

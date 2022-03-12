@@ -2,7 +2,7 @@ import logging
 
 from alclient.observer import Observer
 
-logger = logging.getLogger("adventure_land.character")
+logger = logging.getLogger("alclient.character")
 
 
 class Character(Observer):
@@ -91,37 +91,24 @@ class Character(Observer):
 
         @self.socket.event
         async def entities(data):
-            # logger.info(f"Event data: {data}")
-            pass
+            # logger.debug(f"Entities data: {data}")
+            if "players" in data:
+                pass
 
         @self.socket.event
         async def hit(data):
-            # logger.info(f"Event data: {data}")
+            # logger.debug(f"Hit data: {data}")
             pass
 
         @self.socket.event
         async def death(data):
-            # logger.info(f"Event data: {data}")
+            # logger.debug(f"Death data: {data}")
             pass
 
         @self.socket.event
         async def action(data):
-            # logger.info(f"Event data: {data}")
+            # logger.debug(f"Action data: {data}")
             pass
-
-    async def move(self, going_x, going_y, m):
-        await self.socket.emit(
-            "move",
-            {
-                "x": self.x,
-                "y": self.y,
-                "m": m,
-                "going_x": going_x,
-                "going_y": going_y,
-            },
-        )
-        self.x = going_x
-        self.y = going_y
 
     async def connect(self, address):
         await self.callbacks()

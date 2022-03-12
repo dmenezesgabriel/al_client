@@ -1,10 +1,10 @@
 import logging
 
-from alclient.character import Character
+from alclient.domain.character import Character
+from alclient.domain.user import User
 from alclient.server import Server
-from alclient.user.user import User
 
-logger = logging.getLogger("adventure_land.game")
+logger = logging.getLogger("alclient.game")
 
 
 class Game:

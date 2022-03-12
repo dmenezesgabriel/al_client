@@ -3,7 +3,7 @@ import logging
 
 import aiohttp
 
-logger = logging.getLogger("adventure_land.user")
+logger = logging.getLogger("alclient.user")
 
 
 class User:

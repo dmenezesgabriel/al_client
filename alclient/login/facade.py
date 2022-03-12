@@ -1,9 +1,9 @@
 import logging
 
+from alclient.domain.user import User
 from alclient.login.login import Login
-from alclient.user.user import User
 
-logger = logging.getLogger("adventure_land.login_facade")
+logger = logging.getLogger("alclient.login_facade")
 
 
 class LoginFacade:

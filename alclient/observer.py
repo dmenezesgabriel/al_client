@@ -2,7 +2,7 @@ import logging
 
 import socketio
 
-logger = logging.getLogger("adventure_land.observer")
+logger = logging.getLogger("alclient.observer")
 
 
 class Observer:
